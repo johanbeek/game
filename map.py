@@ -90,6 +90,6 @@ class Map:
 
 
         plt.imshow(map_smooth)
-        plt.savefig(r"d:/temp/map.png")
+        # plt.savefig(r"d:/temp/map.png")
 
         return map_smooth

@@ -13,7 +13,6 @@ nr_tiles_y = 80
 
 tile_size = 64
 
-
 def load_images():
     for key in resources.tile_dict:
         resources.tile_dict[key]["img"] = pygame.image.load(resources.tile_dict[key]['filename'])
@@ -21,6 +20,12 @@ def load_images():
 load_images()
 
 world = World(nr_tiles_x, nr_tiles_y)
+
+"""
+Set the start for the player
+"""
+world.add_player("Johan")
+
 
 gameDisplay = pygame.display.set_mode((display_width, display_height))#, pygame.FULLSCREEN)
 pygame.display.set_caption('Civ')
@@ -54,7 +59,7 @@ def game_loop():
 
         # gameDisplay.fill(white)
 
-        world.draw(gameDisplay, screen_width=display_width, screen_height=display_height,
+        world.draw("Johan", gameDisplay, screen_width=display_width, screen_height=display_height,
                    tile_size=tile_size)
 
         pygame.display.update()
