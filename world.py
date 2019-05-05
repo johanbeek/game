@@ -2,6 +2,7 @@ from map import Map
 from player import Player
 import resources
 import numpy as np
+from settler import Settler
 
 class World:
 
@@ -43,6 +44,11 @@ class World:
         # right_x = left_x + nr_tiles_screen_x
         # bottom_y = top_y + nr_tiles_screen_y
 
+        """
+        Draw world tiles discovered by player
+        """
+        player = self.players[player_name]
+
         for screen_x in range(nr_tiles_screen_x):
             for screen_y in range(nr_tiles_screen_y):
                 screen_pixel_x = screen_x * tile_size
@@ -50,9 +56,43 @@ class World:
 
                 world_x = left_x + screen_x
                 world_y = top_y + screen_y
-                tile_type = self.map.tiles[world_y][world_x].tile_type
+
+                if player.map_discovered[world_y][world_x]:
+                    tile_type = self.map.tiles[world_y][world_x].tile_type
+                else:
+                    tile_type = 'undiscovered'
+
                 img = resources.tile_dict[tile_type]["img"]
                 game_display.blit(img, (screen_pixel_x, screen_pixel_y))
+
+        """
+        Draw towns
+        """
+
+
+        """
+        Draw units
+        """
+        for key in self.players:
+            for unit in self.players[key].units:
+                if player.map_discovered[unit.y][unit.x]:
+
+                    # get location on screen and check if it should be visible
+                    unit_screen_x = unit.x - left_x
+                    unit_screen_y = unit.y - top_y
+
+                    if 0 < unit_screen_x < nr_tiles_screen_x and \
+                        0 < unit_screen_y < nr_tiles_screen_y:
+
+                        screen_pixel_x = unit_screen_x * tile_size + 8
+                        screen_pixel_y = unit_screen_y * tile_size + 8
+
+                        if isinstance(unit, Settler):
+                            img = resources.unit_dict['settler']["img"]
+                        else:
+                            raise ValueError(f"Unknown unit class: {unit}")
+
+                        game_display.blit(img, (screen_pixel_x, screen_pixel_y))
 
     def add_player(self, player_name):
         """
@@ -75,7 +115,7 @@ class World:
         """
         Add player and unit to the world
         """
-        player = Player(player_name, start_x, start_y)
+        player = Player(player_name, start_x, start_y, self.map)
         player.add_unit('settler', start_x, start_y)
 
         self.players[player_name] = player

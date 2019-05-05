@@ -14,8 +14,16 @@ nr_tiles_y = 80
 tile_size = 64
 
 def load_images():
+    """
+    Load all images found in the resources
+    :return:
+    """
     for key in resources.tile_dict:
         resources.tile_dict[key]["img"] = pygame.image.load(resources.tile_dict[key]['filename'])
+
+    for key in resources.unit_dict:
+        resources.unit_dict[key]["img"] = pygame.image.load(resources.unit_dict[key]['filename'])
+
 
 load_images()
 
@@ -25,6 +33,7 @@ world = World(nr_tiles_x, nr_tiles_y)
 Set the start for the player
 """
 world.add_player("Johan")
+
 
 
 gameDisplay = pygame.display.set_mode((display_width, display_height))#, pygame.FULLSCREEN)

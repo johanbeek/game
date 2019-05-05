@@ -19,6 +19,15 @@ tile_dict = {
          },
     "mountain":
         {'filename': "resources/mountain.png",
+         },
+    "undiscovered":
+        {'filename': "resources/undiscovered.png",
          }
 }
 
+unit_dict = {
+    "settler":
+        {
+            'filename': "resources/settler.png",
+        }
+}
