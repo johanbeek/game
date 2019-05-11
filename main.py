@@ -8,10 +8,11 @@ pygame.init()
 display_width = 1280
 display_height = 768
 
-nr_tiles_x = 100
-nr_tiles_y = 80
+nr_tiles_x = 150
+nr_tiles_y = 100
 
 tile_size = 64
+
 
 def load_images():
     """
@@ -24,19 +25,18 @@ def load_images():
     for key in resources.unit_dict:
         resources.unit_dict[key]["img"] = pygame.image.load(resources.unit_dict[key]['filename'])
 
-
 load_images()
 
 world = World(nr_tiles_x, nr_tiles_y)
+
 
 """
 Set the start for the player
 """
 world.add_player("Johan")
 
-
-
-gameDisplay = pygame.display.set_mode((display_width, display_height))#, pygame.FULLSCREEN)
+gameDisplay = pygame.display.set_mode((display_width, display_height))
+# gameDisplay = pygame.display.set_mode((display_width, display_height), pygame.FULLSCREEN)
 pygame.display.set_caption('Civ')
 clock = pygame.time.Clock()
 
@@ -52,21 +52,19 @@ def game_loop():
                 pygame.quit()
                 quit()
 
-            # if event.type == pygame.KEYDOWN:
-            #     if event.key == pygame.K_ESCAPE:
-            #         pygame.quit()
-            #         quit()
-            #
-            #     if event.key == pygame.K_LEFT:
-            #         x_change = -5
-            #     if event.key == pygame.K_RIGHT:
-            #         x_change = 5
-            #
-            # if event.type == pygame.KEYUP:
-            #     if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-            #         x_change = 0
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    world.active_player.move_unit(-1, 0)
+                if event.key == pygame.K_RIGHT:
+                    world.active_player.move_unit(1, 0)
+                if event.key == pygame.K_UP:
+                    world.active_player.move_unit(0, -1)
+                if event.key == pygame.K_DOWN:
+                    world.active_player.move_unit(0, 1)
 
-        # gameDisplay.fill(white)
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
 
         world.draw("Johan", gameDisplay, screen_width=display_width, screen_height=display_height,
                    tile_size=tile_size)

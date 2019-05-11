@@ -59,7 +59,7 @@ class Map:
         """
         prob_map = (edge_map + map_matrix).astype("uint8")
 
-        selem = disk(4)
+        selem = disk(3)
         map_smooth = rank.mean(prob_map, selem=selem)
 
         """
@@ -69,8 +69,8 @@ class Map:
         sd_map = np.std(map_smooth)
 
         water_thr = mean_map - sd_map
-        grass_thr = mean_map
-        forest_thr = mean_map + sd_map
+        grass_thr = mean_map + 0.5 * sd_map
+        forest_thr = mean_map + 0.8 * sd_map
 
         map_smooth[map_smooth <= water_thr] = 1
         map_smooth[(map_smooth > water_thr) & (map_smooth <= grass_thr)] = 2
@@ -89,7 +89,8 @@ class Map:
         map_smooth = rank.mean(map_smooth, selem=selem)
 
 
-        plt.imshow(map_smooth)
+        # plt.imshow(map_smooth)
         # plt.savefig(r"d:/temp/map.png")
+        # plt.close()
 
         return map_smooth

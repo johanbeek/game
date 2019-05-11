@@ -9,6 +9,8 @@ class World:
     def __init__(self, nr_tiles_x, nr_tiles_y):
         self.map = Map(nr_tiles_x, nr_tiles_y)
         self.players = {}
+        self.active_player = None
+
 
     def draw(self, player_name, game_display, screen_width, screen_height, tile_size):
         """
@@ -116,6 +118,10 @@ class World:
         Add player and unit to the world
         """
         player = Player(player_name, start_x, start_y, self.map)
-        player.add_unit('settler', start_x, start_y)
+        self.active_player = player
+
+        unit = player.add_unit('settler', start_x, start_y)
+        player.active_unit = unit     # immediately select the unit
 
         self.players[player_name] = player
+
