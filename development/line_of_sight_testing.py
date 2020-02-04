@@ -1,5 +1,7 @@
 """
 TEMP: DEVELOP LINE OF SIGHT DISCOVERY ALGORITHM
+test change for GIT by Hans 4-Feb-2020 13:47
+hahaha
 """
 import numpy as np
 import pandas as pd
